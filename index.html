@@ -939,15 +939,18 @@ function fmtDate(str){
 }
 function getData(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return[]}}
 // On first load of v8, clear old prayer data keys to avoid ghost entries
-(function(){try{['jpm_v5','jpm_v6','jpm_v7','jpm_v8_old'].forEach(k=>localStorage.removeItem(k))}catch(e){}})();
+(function(){try{['jpm_v5','jpm_v6','jpm_v7','jpm_v8_old','polm_v0'].forEach(k=>localStorage.removeItem(k))}catch(e){}})();
 function saveData(d){localStorage.setItem(KEY,JSON.stringify(d))}
 function getMembers(){
   let mem={};
   try{
-    // Merge member autofill data from all versions (members data is safe to keep)
+    // Include legacy jpm_ keys so existing members still work
     ['jpm_mem_v5','jpm_mem_v6','jpm_mem_v7','jpm_mem_v8'].forEach(k=>{
       try{const d=JSON.parse(localStorage.getItem(k)||'{}');mem={...mem,...d}}catch(e){}
     });
+    // Current key overwrites (most recent data wins)
+    const cur=JSON.parse(localStorage.getItem(MEM_KEY)||'{}');
+    mem={...mem,...cur};
   }catch(e){}
   return mem;
 }
@@ -1062,11 +1065,12 @@ async function lookupMember(){
         }
       });
       // Save rebuilt member data
-      if(sheetsMatches.length>0) saveMembers(mem);
+      // Always save/update member cache from sheets data
+      saveMembers(mem);
     }
   }catch(err){console.warn('Sheets lookup failed:',err)}
 
-  btn.textContent='Search ✦';btn.disabled=false;
+  if(btn){btn.textContent='Search ✦';btn.disabled=false;}
 
   // Merge local + sheets matches, deduplicate by name
   const allNames=new Set(localMatches.map(([n])=>n));
@@ -1174,7 +1178,8 @@ async function submitTestimony(){
     const f=new FormData();
     f.append('data',JSON.stringify(entry));
     await fetch(SHEET_URL,{method:'POST',mode:'no-cors',body:f});
-  }catch(e){console.warn(e)}
+    console.log('Testimony sent to sheets:',entry.name);
+  }catch(e){console.warn('Testimony send error:',e)}
   btn.disabled=false;btn.textContent='✝ Submit Testimony';
   document.getElementById('f-testimony').value='';document.getElementById('t-private').checked=false;
   document.getElementById('word-count').textContent='0 / 500 words';
@@ -1203,7 +1208,12 @@ async function sendEntry(entry){
     parents:{fatherName:entry.fatherName,fatherDob:entry.fatherDob,motherName:entry.motherName,motherDob:entry.motherDob,mobile:entry.parentsMobile},
     children:[{name:entry.child1Name,dob:entry.child1Dob},{name:entry.child2Name,dob:entry.child2Dob},{name:entry.child3Name,dob:entry.child3Dob},{name:entry.child4Name,dob:entry.child4Dob},{name:entry.child5Name,dob:entry.child5Dob}]};
   const d=getData();d.push(local);saveData(d);
-  try{const f=new FormData();f.append('data',JSON.stringify(entry));await fetch(SHEET_URL,{method:'POST',mode:'no-cors',body:f})}catch(e){console.warn(e)}
+  try{
+    const f=new FormData();
+    f.append('data',JSON.stringify(entry));
+    await fetch(SHEET_URL,{method:'POST',mode:'no-cors',body:f});
+    console.log('Entry sent to sheets:',entry.name,entry.type||'prayer');
+  }catch(e){console.warn('Sheet send error:',e)}
 }
 function clearNewForm(){
   ['f-name','f-mobile','f-email','f-address','f-pin','f-referred','f-prayer'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});
