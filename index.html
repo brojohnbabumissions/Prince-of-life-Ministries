@@ -814,7 +814,7 @@ tbody td strong{font-family:'Cormorant Garamond',serif;font-size:.88rem;font-wei
 </div>
 
 <script>
-const SHEET_URL='https://script.google.com/macros/s/AKfycbz3xgeTrSLqTWY1lUVSIMVueAEneeWGLBRy4Pxy4cG_L8WH2wl66enW2eluBb56xvO1aQ/exec';
+const SHEET_URL='https://script.google.com/macros/s/AKfycbznrEV37WArX-4kJpkxcit_eAPFWilx1H3y8-gpNi0n2544rZYS7N9exA5Ze2GFkv2rNw/exec';
 const KEY='polm_v1';const MEM_KEY='polm_mem_v1';const TEST_KEY='polm_test_v1';
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
 const MS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -1513,10 +1513,19 @@ function renderMembers(){
   const srch=(document.getElementById('mem-srch')?.value||'').toLowerCase().trim();
 
   // Build unique members map keyed by WhatsApp number
+  // Use first submission for personal details, collect all prayers
   const membersMap={};
-  data.forEach(e=>{
-    const key=e.mobile||e.name;
+  // Sort by submittedAt ascending so first submission is processed first
+  const sortedData=[...data].sort((a,b)=>{
+    const da=new Date(a.submittedAt||0).getTime()||Number(a.id||0);
+    const db=new Date(b.submittedAt||0).getTime()||Number(b.id||0);
+    return da-db;
+  });
+  sortedData.forEach(e=>{
+    const key=String(e.mobile||e.name||'').trim();
+    if(!key)return;
     if(!membersMap[key]){
+      // First submission — use for personal details
       membersMap[key]={
         name:e.name,mobile:e.mobile||'',marital:e.marital||'',
         dob:e.dob||'',dom:e.dom||'',address:e.address||'',city:e.city||'',
@@ -1527,7 +1536,7 @@ function renderMembers(){
         prayers:[],testimonies:[],firstSeen:e.submittedAt
       };
     }
-    // Add prayer request (avoid duplicates by id)
+    // Always collect prayers (all submissions)
     if(e.prayer&&!membersMap[key].prayers.find(p=>p.id===e.id)){
       membersMap[key].prayers.push({id:e.id,text:e.prayer,date:e.submittedAt,isPrivate:e.isPrivate===true||e.isPrivate==='Yes'});
     }
@@ -1570,10 +1579,10 @@ function renderMembers(){
         ${m.fatherName?`<div class="member-meta">👴 ${m.fatherName}${m.motherName?' · 👵 '+m.motherName:''}</div>`:''}
       </div>
       <div class="member-actions">
-        <button class="mem-btn mem-btn-prayer" onclick="openMemberDetail('${m.mobile||m.name}')">
+        <button class="mem-btn mem-btn-prayer" data-key="${m.mobile||m.name}" data-tab="prayer" onclick="handleMemberBtn(this)">
           🙏 Prayers <span class="mem-count">${pCount}</span>
         </button>
-        <button class="mem-btn mem-btn-test" onclick="openMemberDetail('${m.mobile||m.name}','test')">
+        <button class="mem-btn mem-btn-test" data-key="${m.mobile||m.name}" data-tab="test" onclick="handleMemberBtn(this)">
           ✝ Testimonies <span class="mem-count">${tCount}</span>
         </button>
         ${waUrl?`<a href="${waUrl}" target="_blank" class="mem-btn mem-btn-wa">💬 WA</a>`:''}
@@ -1582,12 +1591,22 @@ function renderMembers(){
   }).join('');
 }
 
-function openMemberDetail(key, tab='prayer'){
+function handleMemberBtn(btn){
+  const key=btn.getAttribute('data-key');
+  const tab=btn.getAttribute('data-tab')||'prayer';
+  openMemberDetail(key,tab);
+}
+
+function openMemberDetail(key, tab){
+  tab=tab||'prayer';
   const data=window._dd||getData();
   const tests=getTestimonies();
   // Find member
-  const entry=data.find(e=>(e.mobile||e.name)===key);
-  if(!entry)return;
+  const key2=String(key||'').trim();
+  // Find the FIRST (oldest) entry for this member for personal details
+  const allEntries=data.filter(e=>String(e.mobile||e.name||'').trim()===key2);
+  const entry=allEntries[0];
+  if(!entry){console.warn('Member not found for key:',key2);return;}
 
   document.getElementById('mem-detail-title').textContent='✝ '+entry.name;
 
@@ -1618,7 +1637,7 @@ function openMemberDetail(key, tab='prayer'){
   ${entry.mobile?`<div style="margin-top:.8rem"><a href="https://wa.me/91${entry.mobile}?text=${encodeURIComponent('Dear '+entry.name+', greetings from The Prince of Life Ministries! 🙏✝️')}" target="_blank" style="display:inline-flex;align-items:center;gap:.4rem;background:#25d366;color:white;padding:.4rem 1rem;border-radius:20px;text-decoration:none;font-family:'Cinzel',serif;font-size:.75rem;font-weight:700">💬 WhatsApp ${entry.name}</a></div>`:''}`;
 
   // Prayers
-  const memberPrayers=data.filter(e=>(e.mobile||e.name)===key&&e.prayer);
+  const memberPrayers=data.filter(e=>String(e.mobile||e.name||'').trim()===key2&&e.prayer);
   document.getElementById('mem-prayers-tab').innerHTML=memberPrayers.length
     ?memberPrayers.map(e=>`<div class="prayer-item">
         <div class="p-date">${fmtSubmitted(e.submittedAt)} ${e.isPrivate===true||e.isPrivate==='Yes'?'<span class="p-private">🔒 Private</span>':''}</div>
@@ -1627,7 +1646,7 @@ function openMemberDetail(key, tab='prayer'){
     :`<div class="empty-state" style="padding:1.5rem"><span class="icon" style="font-size:2rem">🙏</span>No prayer requests yet.</div>`;
 
   // Testimonies
-  const memberTests=tests.filter(t=>(t.mobile||t.name)===key);
+  const memberTests=tests.filter(t=>String(t.mobile||t.name||'').trim()===key2);
   document.getElementById('mem-test-tab').innerHTML=memberTests.length
     ?memberTests.map(t=>`<div class="prayer-item">
         <div class="p-date">${fmtSubmitted(t.submittedAt)} ${t.isPrivate===true||t.isPrivate==='Yes'?'<span class="p-private">🔒 Private</span>':''}</div>
