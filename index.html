@@ -700,8 +700,6 @@ tbody td strong{font-family:'Cormorant Garamond',serif;font-size:.88rem;font-wei
     <!-- DASHBOARD TABS -->
     <div class="dash-tabs">
       <button class="dash-tab-btn active" onclick="switchDashTab('members-panel',this)">👥 Members</button>
-      <button class="dash-tab-btn" onclick="switchDashTab('prayers-panel',this)">🙏 Prayer Requests</button>
-      <button class="dash-tab-btn" onclick="switchDashTab('testimony-panel',this)">✝ Testimonies</button>
     </div>
     <!-- MEMBERS PANEL -->
     <div id="members-panel" class="dash-panel active">
@@ -713,7 +711,7 @@ tbody td strong{font-family:'Cormorant Garamond',serif;font-size:.88rem;font-wei
       <div id="members-list"><div class="empty-state"><span class="icon">⏳</span>Loading members...</div></div>
     </div>
     <!-- PRAYERS PANEL -->
-    <div id="prayers-panel" class="dash-panel">
+    <div id="prayers-panel" class="dash-panel" style="display:none">
       <div class="filter-bar">
         <input type="text" id="srch" placeholder="🔍 Search name, WhatsApp, city..." oninput="renderTable()">
         <select id="f-priv" onchange="renderTable()">
@@ -739,7 +737,7 @@ tbody td strong{font-family:'Cormorant Garamond',serif;font-size:.88rem;font-wei
       </div>
     </div>
     <!-- TESTIMONIES PANEL -->
-    <div id="testimony-panel" class="dash-panel">
+    <div id="testimony-panel" class="dash-panel" style="display:none">
       <div id="test-list"><div class="empty-state"><span class="icon">✝</span>No testimonies yet.</div></div>
     </div>
   </div>
@@ -814,7 +812,7 @@ tbody td strong{font-family:'Cormorant Garamond',serif;font-size:.88rem;font-wei
 </div>
 
 <script>
-const SHEET_URL='https://script.google.com/macros/s/AKfycbznrEV37WArX-4kJpkxcit_eAPFWilx1H3y8-gpNi0n2544rZYS7N9exA5Ze2GFkv2rNw/exec';
+const SHEET_URL='https://script.google.com/macros/s/AKfycbzTVK8l__1xKawFCvfTdZDofJCj2v_mUfJWpteyJXxYDeAWVCZw5RxF_oGr1JUh9hRgLg/exec';
 const KEY='polm_v1';const MEM_KEY='polm_mem_v1';const TEST_KEY='polm_test_v1';
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
 const MS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -1076,7 +1074,6 @@ function switchDashTab(panelId,btn){
   document.querySelectorAll('.dash-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.dash-tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById(panelId).classList.add('active');btn.classList.add('active');
-  if(panelId==='testimony-panel')renderTestimonies();
   if(panelId==='members-panel')renderMembers();
 }
 
@@ -1364,8 +1361,13 @@ async function refreshDashboard(){
   }else{up.style.display='none'}
 
   renderMembers();
-  renderTable();
-  renderTestimonies();
+  // Ensure members panel is active
+  document.querySelectorAll('.dash-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.dash-tab-btn').forEach(b=>b.classList.remove('active'));
+  const mp=document.getElementById('members-panel');
+  const mt=document.querySelector('.dash-tab-btn');
+  if(mp)mp.classList.add('active');
+  if(mt)mt.classList.add('active');
 }
 
 function renderTable(){
