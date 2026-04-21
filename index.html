@@ -49,8 +49,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .intro-divline.expand{width:240px}
 .intro-welcome-to{font-family:'Cinzel',serif;font-size:clamp(.75rem,2vw,.88rem);color:rgba(212,168,67,.7);letter-spacing:5px;text-transform:uppercase;opacity:0;transform:translateY(10px);transition:all .8s ease .5s;position:relative;z-index:2;margin-bottom:.3rem}
 .intro-welcome-to.show{opacity:1;transform:translateY(0)}
-.intro-the{font-family:'Cinzel',serif;font-size:clamp(.85rem,2.5vw,1rem);color:rgba(212,168,67,.75);letter-spacing:6px;font-weight:400;opacity:0;transition:all .8s ease .7s;position:relative;z-index:2}
-.intro-the.show{opacity:.9}
+.intro-the{font-family:'Cinzel',serif;font-size:clamp(1.4rem,3.5vw,2rem);color:var(--gold);font-weight:900;letter-spacing:4px;letter-spacing:6px;font-weight:400;opacity:0;transition:all .8s ease .6s;position:relative;z-index:2}
+.intro-the.show{opacity:1}
 .intro-name{font-family:'Cinzel',serif;font-size:clamp(1.8rem,5.5vw,3.5rem);color:var(--gold);font-weight:900;letter-spacing:2px;line-height:1.15;opacity:0;transform:scale(.9);transition:all .9s ease .9s;text-shadow:0 0 30px var(--glow),0 0 60px rgba(212,168,67,.3);position:relative;z-index:2}
 .intro-name.show{opacity:1;transform:scale(1)}
 .intro-progress{position:absolute;bottom:0;left:0;height:3px;width:0;background:linear-gradient(90deg,transparent,var(--gold3),var(--gold),var(--gold2),var(--gold),var(--gold3),transparent);transition:width 4.5s linear;z-index:2}
@@ -348,6 +348,7 @@ tbody td strong{font-family:'Cormorant Garamond',serif;font-size:.88rem;font-wei
   </div>
   <div class="nav-tabs">
     <button class="nav-tab active" id="home-tab" onclick="showPage('landing-page',this)">🏠 Home</button>
+    <button class="nav-tab" id="about-tab" onclick="showPage('about-page',this)">ℹ️ About</button>
     <button class="nav-tab" id="dash-tab" style="display:none" onclick="showPage('dash-page',this)">📋 Dashboard</button>
   </div>
 </nav>
@@ -673,6 +674,102 @@ tbody td strong{font-family:'Cormorant Garamond',serif;font-size:.88rem;font-wei
   </div>
 </div>
 
+<!-- ═══ ABOUT PAGE ═══ -->
+<div id="about-page" class="page">
+  <div class="form-hero" style="padding:2rem 1rem 1.5rem">
+    <span class="cross-big" style="font-size:2.5rem">✝</span>
+    <h1><span class="the">THE</span>Prince of Life Ministries</h1>
+    <div class="city-sub">Kakinada · జీవాధిపతి ప్రార్థన మందిరం</div>
+  </div>
+  <div class="form-wrap" style="max-width:780px">
+    <div class="form-section">
+      <div class="section-header">
+        <h3>About / మా గురించి</h3>
+      </div>
+      <div class="section-body" style="font-family:'Noto Serif Telugu',serif;line-height:2.2;color:var(--text)">
+
+        <!-- Foundation verse -->
+        <div style="background:linear-gradient(135deg,rgba(42,21,69,.08),rgba(90,48,128,.05));border-left:4px solid var(--gold);border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.5rem">
+          <div style="font-family:'Cinzel',serif;font-size:.72rem;color:var(--gold3);letter-spacing:2px;text-transform:uppercase;margin-bottom:.6rem">మా పునాది వాక్యం</div>
+          <div style="font-size:.95rem;color:var(--purple2);font-style:italic;line-height:2.2">
+            "ప్రభువు సమీపముగా ఉన్నాడు. దేనినిగూర్చియు చింతపడకుడి గాని ప్రతి విషయములోను ప్రార్థన విజ్ఞాపనములచేత కృతజ్ఞతాపూర్వకముగా మీ విన్నపములు దేవునికి తెలియజేయుడి."
+          </div>
+          <div style="font-family:'Cinzel',serif;font-size:.75rem;color:var(--gold3);margin-top:.5rem;letter-spacing:1px">— ఫిలిప్పీ 4:5,6</div>
+        </div>
+
+        <!-- Vision -->
+        <div style="margin-bottom:1.5rem">
+          <div style="font-family:'Cinzel',serif;font-size:.85rem;color:var(--purple);font-weight:700;letter-spacing:1px;margin-bottom:.6rem;display:flex;align-items:center;gap:.5rem">
+            <span style="color:var(--gold)">✦</span> మా దర్శనం <span style="font-family:'Inter',sans-serif;font-size:.72rem;font-weight:400;color:var(--muted)">(Our Vision)</span>
+          </div>
+          <p style="font-size:.92rem;color:var(--text)">యేసుక్రీస్తు ప్రేమను మరియు ఆయన ఇచ్చే జీవాన్ని ప్రతి ఒక్కరికీ పంచడమే మా పరిచర్య యొక్క ప్రధాన లక్ష్యం. "జీవాధిపతి" ( The Prince of Life ) అయిన క్రీస్తు ద్వారా ప్రతి వ్యక్తికీ ఆత్మీయ రక్షణ, స్వస్థత మరియు నిరీక్షణ కలగాలని మేము ప్రార్థిస్తున్నాము.</p>
+        </div>
+
+        <!-- Website purpose -->
+        <div style="margin-bottom:1.5rem">
+          <div style="font-family:'Cinzel',serif;font-size:.85rem;color:var(--purple);font-weight:700;letter-spacing:1px;margin-bottom:.6rem;display:flex;align-items:center;gap:.5rem">
+            <span style="color:var(--gold)">✦</span> మా వెబ్‌సైట్ ఉద్దేశ్యం
+          </div>
+          <p style="font-size:.92rem;color:var(--text)">ఈ పరిచర్యపై దేవుని ప్రత్యేకమైన దృష్టి మరియు ఆయన మనస్సు ఉంది. కనుక, మీరు పంపే ప్రతి న్యాయమైన ప్రార్థన విన్నపం దేవుని చిత్తానుసారంగా నెరవేరుతుందని మేము నమ్ముతున్నాము. మీ భారాలను ప్రార్థన ద్వారా దేవుని పాదాల చెంత పెట్టడానికి ఇదొక పవిత్ర వేదిక.</p>
+        </div>
+
+        <!-- Services -->
+        <div style="margin-bottom:1.5rem">
+          <div style="font-family:'Cinzel',serif;font-size:.85rem;color:var(--purple);font-weight:700;letter-spacing:1px;margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem">
+            <span style="color:var(--gold)">✦</span> మేము మీకు అందించే సేవలు
+          </div>
+          <div style="background:rgba(42,21,69,.05);border:1px solid rgba(200,184,120,.3);border-radius:8px;padding:.9rem 1.1rem;margin-bottom:.7rem">
+            <div style="font-family:'Cinzel',serif;font-size:.78rem;color:var(--gold3);font-weight:700;margin-bottom:.4rem;letter-spacing:.5px">🙏 వ్యక్తిగత ప్రార్థన (Prayer Requests)</div>
+            <p style="font-size:.88rem;color:var(--text)">మీరు వెబ్‌సైట్‌లో మీ ప్రార్థన అవసరాలను మరియు వివరాలను సమర్పించినప్పుడు, మేము మీకు స్వయంగా ఫోన్ చేసి, మీతో కలిసి ఏకీభవించి ప్రార్థన చేస్తాము.</p>
+          </div>
+          <div style="background:rgba(42,21,69,.05);border:1px solid rgba(200,184,120,.3);border-radius:8px;padding:.9rem 1.1rem">
+            <div style="font-family:'Cinzel',serif;font-size:.78rem;color:var(--gold3);font-weight:700;margin-bottom:.4rem;letter-spacing:.5px">✝ సాక్ష్యాలు (Testimonies)</div>
+            <p style="font-size:.88rem;color:var(--text)">దేవుడు మీ జీవితంలో చేసిన అద్భుతాలను ఇక్కడ పంచుకోవచ్చు. మీ సాక్ష్యం మరొకరి జీవితంలో విశ్వాసపు వెలుగును నింపుతుంది.</p>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div style="background:linear-gradient(135deg,rgba(212,168,67,.12),rgba(212,168,67,.06));border:1px solid rgba(212,168,67,.3);border-radius:10px;padding:1.2rem;text-align:center;margin-bottom:.5rem">
+          <p style="font-size:.95rem;color:var(--purple2);margin-bottom:.6rem">ఏ విషయంలోనూ చింతించకండి, ప్రార్థన ద్వారా దేవుని సహాయాన్ని పొందుకోండి. మీ ప్రతి అవసరతలో మీకు ప్రార్థన పూర్వకమైన తోడ్పాటు అందించడానికి The Prince of Life Ministries ఎల్లప్పుడూ సిద్ధంగా ఉంటుంది.</p>
+          <div style="font-family:'Cinzel',serif;font-size:.85rem;color:var(--gold);font-weight:700;letter-spacing:1px">✝ దేవుడు మిమ్మల్ని దీవించును గాక! ✝</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Pastor + Service times -->
+    <div class="form-section">
+      <div class="section-header"><h3>Service Times</h3><span class="tel">సేవా సమయాలు</span></div>
+      <div class="section-body">
+        <ul class="service-list">
+          <li><span class="dot">✦</span><span><strong>ఆదివారం ఆరాధన:</strong> ఉ॥ 10 గం. సుండి 12:30 వరకు</span></li>
+          <li><span class="dot">✦</span><span><strong>ఆదివారం సండేస్కూల్:</strong> ఉ॥ 8:30 సుండి 9:30 వరకు</span></li>
+          <li><span class="dot">✦</span><span><strong>బుధవారం ఆసక్తి ప్రార్థన:</strong> రా॥ 7:30 సుండి 8:30 వరకు</span></li>
+          <li><span class="dot">✦</span><span><strong>శుక్రవారం ఆరాధన:</strong> రా॥ 7:00 సుండి 9:30 వరకు</span></li>
+          <li><span class="dot">✦</span><span><strong>దేవునితో సంపూర్ణ సహవాస ప్రార్థన:</strong> ప్రతి రెండొవ శనివారం 10:00 గంటల నుండి సాయంత్రం 5:00 గంటల వరకు జరుగును</span></li>
+          <li><span class="dot">✦</span><span><strong>ఆల్ నైట్ ఆరాధన:</strong> Please contact</span></li>
+          <li><span class="dot">✦</span><span><strong>ప్రతి నెల మొదటి ఆదివారం</strong> ప్రభువు బల్ల ఆరాధన ఇవ్వబడును.</span></li>
+        </ul>
+        <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.82rem;color:var(--muted);font-family:'Inter',sans-serif">
+          <div style="margin-bottom:.8rem">
+            <strong style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text)">Pastor John Babu</strong><br>
+            <span>WhatsApp: 9030913852</span><br>
+            <span style="font-size:.75rem">Seetha Rama Nagar, Kalyana Mandapam Back Side, Gudariguntta, Kakinada – 533003</span>
+          </div>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+            <a href="https://youtube.com/@BROJOHNBABUMISSIONS" target="_blank" style="display:inline-flex;align-items:center;gap:.4rem;padding:.5rem .9rem;border-radius:20px;text-decoration:none;font-family:'Inter',sans-serif;font-size:.73rem;font-weight:700;background:#ff0000;color:white;box-shadow:0 3px 10px rgba(255,0,0,.3)">▶ YouTube</a>
+            <a href="https://instagram.com/brojohnbabumissions" target="_blank" style="display:inline-flex;align-items:center;gap:.4rem;padding:.5rem .9rem;border-radius:20px;text-decoration:none;font-family:'Inter',sans-serif;font-size:.73rem;font-weight:700;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:white;box-shadow:0 3px 10px rgba(131,58,180,.3)">📷 Instagram</a>
+            <a href="https://facebook.com/share/1Vn2HR4LEU" target="_blank" style="display:inline-flex;align-items:center;gap:.4rem;padding:.5rem .9rem;border-radius:20px;text-decoration:none;font-family:'Inter',sans-serif;font-size:.73rem;font-weight:700;background:#1877f2;color:white;box-shadow:0 3px 10px rgba(24,119,242,.3)">👍 Facebook</a>
+            <a href="https://maps.google.com/maps?q=16.9739089,82.2529988" target="_blank" style="display:inline-flex;align-items:center;gap:.4rem;padding:.5rem .9rem;border-radius:20px;text-decoration:none;font-family:'Inter',sans-serif;font-size:.73rem;font-weight:700;background:linear-gradient(135deg,#34a853,#0f9d58);color:white;box-shadow:0 3px 10px rgba(52,168,83,.3)">📍 Location</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="back-btn" onclick="goHome()">← Back to Home</button>
+  </div>
+</div>
+
 <!-- ═══ DASHBOARD ═══ -->
 <div id="dash-page" class="page">
   <div class="dash-wrap">
@@ -812,7 +909,7 @@ tbody td strong{font-family:'Cormorant Garamond',serif;font-size:.88rem;font-wei
 </div>
 
 <script>
-const SHEET_URL='https://script.google.com/macros/s/AKfycbzTVK8l__1xKawFCvfTdZDofJCj2v_mUfJWpteyJXxYDeAWVCZw5RxF_oGr1JUh9hRgLg/exec';
+const SHEET_URL='https://script.google.com/macros/s/AKfycby3f1BeVTew3IMD-fEWWpdJdLU0sJbg52XjvD4ukghHoa6UiSGPmun-40o4k7zy7ndvYQ/exec';
 const KEY='polm_v1';const MEM_KEY='polm_mem_v1';const TEST_KEY='polm_test_v1';
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
 const MS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -1202,6 +1299,7 @@ async function submitReturnForm(){
     saveMembers(mem);_retMem.data=getMembers()[_retMem.name];
   }
   const entry=buildEntry(_retMem.name,_retMem.data,prayer,document.getElementById('r-private').checked,document.getElementById('r-no-contact').checked);
+  entry.existingMember=true; // flag: don't update Members sheet, only add to Prayer Requests
   await sendEntry(entry);
   btn.disabled=false;btn.textContent='✝ Submit Prayer Request';
   document.getElementById('r-prayer').value='';
