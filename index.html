@@ -1393,23 +1393,20 @@ function closePopup(){document.getElementById('bible-popup').classList.remove('o
 async function refreshDashboard(){
   document.getElementById('tbl-body').innerHTML='<tr><td colspan="12"><div class="empty-state"><span class="icon">⏳</span>Loading...</div></td></tr>';
   let data=[];
+  // ALWAYS clear local cache first — so deleted sheet rows don't persist
+  localStorage.removeItem(KEY);
+  localStorage.removeItem(TEST_KEY);
   try{
     const res=await fetch(SHEET_URL+'?action=getAll',{method:'GET',mode:'cors'});
     const json=await res.json();
-    if(json.data&&json.data.length>0){
-      data=json.data;
-      localStorage.removeItem(KEY);
-      saveData(data);
-    } else {
-      data=getData();
-    }
-    // Load testimonies from sheets if available
-    if(json.testimonies&&json.testimonies.length>0){
-      localStorage.removeItem(TEST_KEY);
-      saveTestimonies(json.testimonies);
-    }
+    // Use sheets data regardless — even empty array means sheets is empty
+    data=json.data||[];
+    saveData(data);
+    const tests=json.testimonies||[];
+    saveTestimonies(tests);
+    console.log('Loaded from sheets: '+data.length+' prayers, '+tests.length+' testimonies');
   }catch(e){
-    console.warn('Using local data:',e);
+    console.warn('Sheets fetch failed, using local cache:',e);
     data=getData();
   }
   window._dd=data;
